@@ -1,29 +1,18 @@
+require("moonscript.parse")
+require("moonscript.compile")
+local parse, compile = moonscript.parse, moonscript.compile
+
 local agent = require 'lib.agent'
 
 local mission_names = {
   'asserts',
-  'variables',
-  'numbers',
-  'strings',
-  'patterns',
-  'control',
-  'truthiness',
-  'functions',
-  'errors',
-  'load',
-  'tables',
-  'tables_and_functions',
-  'meta',
-  'indices',
-  'exercise',
-  'weak_tables',
-  'environments'
+  'variables'
 }
 
 local missions = {}
 
 for _, name in ipairs(mission_names) do
-  table.insert(missions, { name = name, path = name .. '.lua' })
+  table.insert(missions, { name = name, path = name .. '.moon' })
 end
 
 local results = agent.run_missions(missions)

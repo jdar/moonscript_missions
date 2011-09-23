@@ -1,5 +1,8 @@
 local ansicolors = require 'lib.ansicolors'
-
+require("moonscript.parse")
+require("moonscript.compile")
+local parse, compile = moonscript.parse, moonscript.compile
+ 
 local function cwrite(str)
   io.write(ansicolors(str))
 end
@@ -116,24 +119,38 @@ local function add_test_to_mission(mission, name, f)
 end
 
 local function load_mission(mission, options)
-  local f, message = loadfile(mission.path)
-  if not f then
+  local p = assert(io.open(mission.path, "r"))
+  if not p then
     mission.status = 'file error'
-    mission.message = message
+    mission.message = "file not found" 
     invoke_callback(options.file_error, mission)
     return mission
   end
 
-  setfenv(f, mission)
-  setmetatable(mission, {__index = mission_environment, __newindex = add_test_to_mission})
-  local succeed, message = pcall(f)
-  if not succeed then
-    mission.status = 'syntax error'
-    mission.message = message
+  local moon_code = p:read("*all")
+  local tree, message = parse.string(moon_code)
+  local lua_code, pos
+
+  lua_code, message, pos = compile.tree(tree)
+  if not lua_code then
+    -- this totally doesn't work yet.
+    mission.status = 'moonscript syntax error'
+    mission.message = error(compile.format_error(message, pos, moon_code))
     invoke_callback(options.syntax_error, mission)
     return mission
   end
 
+  local named_functions_lua_code = string.gsub(lua_code, "local ([%a_]+)\n([%a_]+) = function()", function(x) return 'function '.. x end)
+  local f = loadstring(named_functions_lua_code)
+  setfenv(f, mission)
+  setmetatable(mission, {__index = mission_environment, __newindex = add_test_to_mission})
+  local succeed, message = pcall(f)
+  if not succeed then
+    mission.status = 'lua syntax error'
+    mission.message = message
+    invoke_callback(options.syntax_error, mission)
+    return mission
+  end
   mission.status = 'loaded'
   return mission
 end

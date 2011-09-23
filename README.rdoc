@@ -1,15 +1,15 @@
 = Lua Missions
 
-The Lua Missions help you learn Lua.
-The goal is to learn the Lua language, syntax, structure, and some common
-functions and libraries, through failing tests.
+The Moon Missions help you learn Moonscript-- a language which compiles one-to-one to lua.
+The goal is to learn the language Moonscript, syntax, structure, some common
+functions and libraries of the underlying language Lua, all through failing tests. 
 
 == The Structure
 
-The lessons are broken out into areas by file, strings are covered in strings.lua,
-nil is covered in nil.lua, etc. They are presented in order in the missions.lua file.
+The lessons are broken out into areas by file, strings are covered in strings.moon,
+nil is covered in nil.moon, etc. They are presented in order in the missions.moon file.
 
-Each mission builds up your knowledge of Lua and builds upon itself.  It will stop at
+Each mission builds up your knowledge of Moonscript and builds upon itself.  It will stop at
 the first place you need to correct.
 
 Some missions simply need to have the correct answer substituted for an incorrect one.
@@ -17,21 +17,16 @@ Some, however, require you to supply your own answer.  If you see the variable +
 double underscore) listed, it is a hint to you to supply your own code in order to
 make it work correctly.
 
-== Installing Lua
+== Installing Moonscript
 
-If you do not have Lua setup, please visit http://www.lua.org/download.html for
+If you do not have Moonscript setup, please visit http://www.moonscript.org/ for
 operating specific instructions. To check the installations simply type:
 
 *nix platforms from any terminal window:
 
-   [~] $ lua -v
+   [~] $ moon -v
 
-Windows from the command prompt (cmd.exe)
-
-   c:\lua -v
-
-Any response for Lua with a version number greater than 5.0 is fine (should be
-around 5.1 or more).
+Any response for Moonscript with a version number greater than 0.1.0 is fine.
 
 == The Missions
 
@@ -39,13 +34,8 @@ In order to run de tests, you must execute the missions.lua file.
 
 *nix platforms, from the lua_missions/missions directory:
 
-    [lua_missions] $ cd missions
-    [lua_missions/missions] $ lua missions.lua
-
-Windows is the same thing
-
-    c:\> cd lua_missions\missions
-    c:\lua_missions\missions\> lua missions.lua
+    [moonscript_missions] $ cd missions
+    [moonscript_missions/missions] $ lua missions.lua
 
 === Red, Green, Refactor
 
@@ -69,21 +59,20 @@ The very first time you run it you will see the following output:
     test_assert: [fail]
     Assertion failed: Expected [false] to be [true]
     The error happened here:
-      asserts.lua:3: in function <asserts.lua:2>
-
+      asserts.moon:3: in function <asserts.moon:2>
+[LINENUMBERS IS CURRENTLY BROKEN]
 
 
 It is telling you where to look for the first solution:
 
     Assertion failed: Expected [false] to be [true]
     The error happened here:
-      asserts.lua:3: in function <asserts.lua:2>
+      asserts.moon:3: in function <asserts.moon:2>
 
 We then open up the asserts.lua file and look at the first test:
 
-    function test_assert()
-      assert_true(false) -- this should be true
-    end
+    test_assert = ->
+      assert_true false -- this should be true
 
 We then change the +false+ to +true+ and run the test again. Ignore everything except
 the method name (+test_assert+) and the parts inside the method (everything
@@ -95,7 +84,8 @@ the statement is +false+.
 
 == Inspiration
 
-This is heavily inspired by the Ruby Koans project:
+This is (currently) a direct port from the Lua Missions tutorial, which, in turn, was
+heavily inspired by the Ruby Koans project:
 
 http://rubykoans.com/
 
@@ -104,20 +94,23 @@ Go there and check it out, in case you are curious about ruby. Ruby is a great l
 
 == Other Resources
 
+Lua Missions by Enrique García ::  http://www.github.com/kikito/lua_missions
+The Moonscript Language        ::  http://www.moonscript.org
 The Lua Language               ::  http://www.lua.org
 Programming in lua             ::  http://www.lua.org/pil
 Lua-users wiki                 ::  http://lua-users.org/
 
 = Other stuff
 
-Author         :: Enrique García <kikito - at - gmail - dot - com> 
-Source & Issues:: http://www.github.com/kikito/lua_missions
-Requires       :: Lua 5.1 or later (optional: Rake for building up the files from source)
+Author         :: Darius Roberts
+Source & Issues:: http://www.github.com/jdar/moonscript_missions
+Requires       :: Moonscript 0.1.0, which requires Lua 5.1 or later 
+                 (optional: Rake for building up the files from source)
 
 = License
 
 http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png
 
-lua_missions is released under a Creative Commons,
+moonscript_missions is released under a Creative Commons,
 Attribution-NonCommercial-ShareAlike, Version 3.0
 (http://creativecommons.org/licenses/by-nc-sa/3.0/) License.
