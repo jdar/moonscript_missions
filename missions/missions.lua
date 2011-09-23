@@ -1,12 +1,24 @@
-require("moonscript.parse")
-require("moonscript.compile")
-local parse, compile = moonscript.parse, moonscript.compile
-
 local agent = require 'lib.agent'
 
 local mission_names = {
   'asserts',
-  'variables'
+  'variables',
+  'numbers',
+  'strings',
+  'patterns',
+  'control',
+  'truthiness',
+  'functions',
+  'errors',
+  'load',
+  'tables',
+  'tables_and_functions',
+  'meta'--[[,
+  'indices',
+  'exercise',
+  'weak_tables',
+  'environments'
+  ]]
 }
 
 local missions = {}

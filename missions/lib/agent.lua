@@ -135,7 +135,9 @@ local function load_mission(mission, options)
   if not lua_code then
     -- this totally doesn't work yet.
     mission.status = 'moonscript syntax error'
-    mission.message = error(compile.format_error(message, pos, moon_code))
+    print(message)
+    print(pos)
+    mission.message = message --compile.format_error(message, pos, moon_code)
     invoke_callback(options.syntax_error, mission)
     return mission
   end
