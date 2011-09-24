@@ -1,4 +1,4 @@
-test_variables_are_defined_locally_by_default = ->
+test_local_variables = ->
   x = 'a value'
   assert_equal __, x
 

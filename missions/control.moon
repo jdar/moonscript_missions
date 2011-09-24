@@ -60,13 +60,13 @@ test_break = ->
   assert_equal(__, result)
 
 
-test_repeat = ->
-  i, result = 1, 1
-  repeat
-    result = result * i
-    i = i + 1
-  until i==11
-  assert_equal(__, result)
+--test_repeat = ->
+--  i, result = 1, 1
+--  repeat
+--    result = result * i
+--    i = i + 1
+--  until i==11
+--  assert_equal(__, result)
 
 
 test_numeric_for_creates_a_local_variable_not_available_outside_the_loop = ->

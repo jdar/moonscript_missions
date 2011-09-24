@@ -42,24 +42,6 @@ test_double_brackets_can_handle_quotes_and_apostrophes_without_escaping_them = -
   -- So it's just easier to use them if you have to mix both quotes and apostrophes somehow.
 
 
-test_double_brackets_can_take_several_lines = ->
-  long_str = [[
-It was the best of times,
-It was the worst of times.
-]]
-  assert_equal(__, type(long_str))
---[[ bonus note:
--- You can use multi-line strings to create multi-line comments,
--- such as this one.
-]]
-
-
-test_double_brackets_can_be_nested_but_they_need_the_equals_sign = ->
-  a = [=[one [[two]] three]=]
-  b = "one [[two]] three"
-  assert_equal(__, a == b)
-  -- note: if you remove the equal signs from a you will get a syntax error
-
 
 test_it_doesnt_matter_how_many_equal_signs_you_use_as_long_as_they_are_the_same_at_the_start_and_ = ->
   a = [===[one [[two]] three]===]

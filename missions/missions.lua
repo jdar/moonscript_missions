@@ -1,19 +1,23 @@
 local agent = require 'lib.agent'
 
 local mission_names = {
-  'asserts',
+  'asserts', 
   'variables',
   'numbers',
   'strings',
-  'patterns',
-  'control',
+  'patterns', 
+  'control',  -- dunno what's up with this one
+--  'comprehensions_and_with', --unwritten
   'truthiness',
+ --classes,    --unwritten
+ --inheritance, --unwritten
   'functions',
   'errors',
-  'load',
+  'load', -- major load errors
   'tables',
+-- 'table_comprehensions', --unwritten
   'tables_and_functions',
-  'meta'--[[,
+  'meta'--[[,       -- these will probably break...
   'indices',
   'exercise',
   'weak_tables',

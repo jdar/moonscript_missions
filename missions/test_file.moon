@@ -1,6 +1,7 @@
-local person = {}
+--use 'with' ?
+person = {}
 
 person.id = 'kikito'
-person.speak = function() return 'hello there!' end
+person.speak = -> 'hello there!'
 
-return person
+person

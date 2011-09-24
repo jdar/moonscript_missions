@@ -142,7 +142,7 @@ local function load_mission(mission, options)
     return mission
   end
 
-  local named_functions_lua_code = string.gsub(lua_code, "local ([%a_]+)\n([%a_]+) = function()", function(x) return 'function '.. x end)
+  local named_functions_lua_code = string.gsub(lua_code, "local test_([%a_]+)\ntest_([%a_]+) = function()", function(x) return 'function '.. x end)
   local f = loadstring(named_functions_lua_code)
   setfenv(f, mission)
   setmetatable(mission, {__index = mission_environment, __newindex = add_test_to_mission})
