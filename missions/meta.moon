@@ -13,24 +13,19 @@ test_setmetatable_returns_the_table_being_modified = ->
 
 
 test__tostring_metamethod_allows_defining_the_way_tables_are_transformed_into_text = ->
-  mt = {
-    __tostring = function(x)
-      return "table with " .. tostring(#x) .. " items"
-    
-  }
+  mt = {}
+  mt.__tostring = (x) ->
+      "table with " .. tostring(#x) .. " items"
   t = setmetatable({1,2,3,4}, mt)
   assert_equal(__, tostring(t))
 
 
 test__add_metamethod_is_invoked_when_the_plus_symbol_is_used = ->
-  mt = {
-    __add = function(a,b)
-      return a.value + b.value
-    
-  }
-
-  t1 = {value = 10}
-  t2 = {value = 20}
+  mt = {}
+  mt.__add = (a,b) ->
+      a.value + b.value
+  t1 = {value: 10}
+  t2 = {value: 20}
   setmetatable(t1, mt) -- it's enough if one of the tables has a metatable with __add
 
   assert_equal(__, t1 + t2)
@@ -39,16 +34,12 @@ test__add_metamethod_is_invoked_when_the_plus_symbol_is_used = ->
 
 
 test__unm_metamethod_is_invoked_when_the_unary_minus_symbol_is_used = ->
-  mt = {
-    __unm = function(x)
+  mt = {}
+  mt.__unm = (x) ->
       result = {}
       for i=#x, 1, -1 do -- reverse loop
         table.insert(result, x[i])
-      
-      return result
-    
-  }
-
+      result
   t = {1,2,3,4,5}
   setmetatable(t, mt)
   result = -t
@@ -57,19 +48,15 @@ test__unm_metamethod_is_invoked_when_the_unary_minus_symbol_is_used = ->
 
 
 test__concat__metamethod_is_invoked_when_dot_dot_operator_is_used = ->
-  mt = {
-    __concat = function(a,b)
+  mt = {}
+  mt.__concat = (a,b)->
       result = {}
-      for i=1, #a do table.insert(result, a[i]) 
-      for i=1, #b do table.insert(result, b[i]) 
-      return result
-    
-  }
-
+      for i=1, #a do table.insert(result, a[i])
+      for i=1, #b do table.insert(result, b[i])
+      result
   t1 = {1,2,3}
   t2 = {4,5,6}
   setmetatable(t1, mt)
-
   result = t1 .. t2
 
   assert_equal(__, table.concat(result, ', '))
@@ -81,20 +68,15 @@ test__eq_operator_is_invoked_when_the_equal_or_not_equal_operators_are_used = ->
   t2 = {1,2,3}
 
   assert_equal(__, t1 == t2)
-  assert_equal(__, t1 ~= t2)
+  assert_equal(__, t1 != t2)
 
-  mt = {
-    __eq = (a,b) ->
+  mt = {}
+  mt.__eq = (a,b) ->
       for k,v in pairs(a) do
-        if b[k] ~= v then return false 
-      
+        if b[k] != v then return false 
       for k,v in pairs(b) do
-        if a[k] ~= v then return false 
-      
+        if a[k] != v then return false 
       true
-    
-  }
-
   setmetatable(t1, mt)
   assert_equal(__, t1 == t2)
   assert_equal(__, t1 ~= t2)
@@ -104,15 +86,10 @@ test__eq_operator_is_invoked_when_the_equal_or_not_equal_operators_are_used = ->
   assert_equal(__, t1 == t2)
   assert_equal(__, t1 ~= t2)
 
-
-
 test__lt_metamethod_is_invoked_when_the_less_or_greater_than_operators_are_used = ->
-
-  mt = {
-    __lt = function(a,b)
+  mt = {}
+  mt.__lt = (a,b) ->
       for i=1, #b do table.insert(a, b[i]) 
-    
-  }
 
   t1 = { 1,2,3 }
   t2 = { 4,5,6 }
@@ -130,11 +107,8 @@ test__lt_metamethod_is_invoked_when_the_less_or_greater_than_operators_are_used 
 
 
 test__call_operator_is_invoked_when_a_table_is_used_like_a_function = ->
-  doubler = setmetatable({}, {
-    __call = function(t, x)
-      return x * 2
-    
-  })
-
+  mt = {}
+  mt.__call = (t, x) ->
+      x * 2
+  doubler = setmetatable({}, mt)
   assert_equal(__, doubler(10))
-
